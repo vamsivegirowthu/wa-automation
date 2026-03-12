@@ -1,4 +1,4 @@
-const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys")
+const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require("@whiskeysockets/baileys")
 const pino = require("pino")
 const qrcode = require("qrcode-terminal")
 const cron = require("node-cron")
@@ -9,7 +9,10 @@ async function startBot(){
 
 const { state, saveCreds } = await useMultiFileAuthState("auth_info")
 
+const { version } = await fetchLatestBaileysVersion()
+
 sock = makeWASocket({
+version,
 auth: state,
 logger: pino({ level: "silent" })
 })
@@ -30,15 +33,16 @@ console.log("✅ WhatsApp connected")
 }
 
 })
+
 }
 
 startBot()
 
 // scheduler
-cron.schedule("45 22 * * *", async () => {
+cron.schedule("47 22 * * *", async () => {
 
 if(!sock){
-console.log("❌ WhatsApp not ready")
+console.log("WhatsApp not ready")
 return
 }
 
@@ -63,6 +67,6 @@ await new Promise(r => setTimeout(r,5000))
 
 }
 
-console.log("✅ Bulk sending finished")
+console.log("Bulk sending finished")
 
 })
