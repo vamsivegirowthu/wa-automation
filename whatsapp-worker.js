@@ -28,10 +28,10 @@ qrcode.generate(qr, { small: true })
 if(connection === "open"){
 console.log("✅ WhatsApp connected")
 
-// 5:30 PM scheduler
-cron.schedule("20 22 * * *", async () => {
+// 10:27 PM scheduler
+cron.schedule("27 22 * * *", async () => {
 
-console.log("⏰ Sending messages at 10:20 PM")
+console.log("⏰ Sending messages at 10:27 PM")
 
 const numbers = [
 "+918501830360",
