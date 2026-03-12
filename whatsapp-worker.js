@@ -3,12 +3,14 @@ const pino = require("pino")
 const qrcode = require("qrcode-terminal")
 const cron = require("node-cron")
 
+let sock
+
 async function startBot(){
 
 const { state, saveCreds } = await useMultiFileAuthState("auth_info")
 const { version } = await fetchLatestBaileysVersion()
 
-const sock = makeWASocket({
+sock = makeWASocket({
 version,
 auth: state,
 logger: pino({ level: "silent" })
@@ -27,11 +29,18 @@ qrcode.generate(qr, { small: true })
 
 if(connection === "open"){
 console.log("✅ WhatsApp connected")
+}
 
-// 10:27 PM scheduler
-cron.schedule("27 22 * * *", async () => {
+})
 
-console.log("⏰ Sending messages at 10:27 PM")
+}
+
+startBot()
+
+// scheduler outside connection
+cron.schedule("35 22 * * *", async () => {
+
+console.log("⏰ Sending messages at 10:35 PM")
 
 const numbers = [
 "+918501830360",
@@ -56,13 +65,5 @@ console.log("Bulk sending finished")
 
 })
 
-}
-
-})
-
-}
-
 // keep bot alive
 setInterval(() => {}, 1000)
-
-startBot()
