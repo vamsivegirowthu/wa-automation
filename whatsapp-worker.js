@@ -38,8 +38,8 @@ console.log("✅ WhatsApp connected")
 
 startBot()
 
-// scheduler
-cron.schedule("47 22 * * *", async () => {
+// scheduler (every 1 minute for testing)
+cron.schedule("*/1 * * * *", async () => {
 
 if(!sock){
 console.log("WhatsApp not ready")
@@ -49,16 +49,14 @@ return
 console.log("⏰ Sending messages")
 
 const numbers = [
-"+918501830360",
-"+917508612345"
+"918501830360",
+"917508612345"
 ]
 
 for (let num of numbers){
 
-const cleanNumber = num.replace("+","")
-
-await sock.sendMessage(cleanNumber + "@s.whatsapp.net", {
-text: "Hello 👋 Bulk message"
+await sock.sendMessage(num + "@s.whatsapp.net", {
+text: "Hello 👋 Bulk message from Railway bot 🚀"
 })
 
 console.log("Message sent:", num)
@@ -67,6 +65,6 @@ await new Promise(r => setTimeout(r,5000))
 
 }
 
-console.log("Bulk sending finished")
+console.log("✅ Bulk sending finished")
 
 })
