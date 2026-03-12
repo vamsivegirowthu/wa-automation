@@ -6,7 +6,6 @@ const cron = require("node-cron")
 async function startBot(){
 
 const { state, saveCreds } = await useMultiFileAuthState("auth_info")
-
 const { version } = await fetchLatestBaileysVersion()
 
 const sock = makeWASocket({
@@ -62,5 +61,8 @@ console.log("Bulk sending finished")
 })
 
 }
+
+// keep bot alive
+setInterval(() => {}, 1000)
 
 startBot()
