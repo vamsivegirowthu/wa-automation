@@ -58,7 +58,7 @@ const numbers = [
 for (let num of numbers){
 
 await sock.sendMessage(num + "@s.whatsapp.net", {
-text: "Hello 👋 Bulk message from Railway bot 🚀"
+text: "Hello 👋 This is Vamsi from AI Automation Team. Reply YES to know more."
 })
 
 console.log("✅ Message sent:", num)
