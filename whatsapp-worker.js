@@ -1,4 +1,4 @@
-const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require("@whiskeysockets/baileys")
+const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys")
 const pino = require("pino")
 const qrcode = require("qrcode-terminal")
 const cron = require("node-cron")
@@ -21,6 +21,7 @@ sock.ev.on("connection.update", (update) => {
 const { connection, qr } = update
 
 if(qr){
+console.log("Scan QR")
 qrcode.generate(qr, { small: true })
 }
 
@@ -34,7 +35,12 @@ console.log("✅ WhatsApp connected")
 startBot()
 
 // scheduler
-cron.schedule("40 22 * * *", async () => {
+cron.schedule("45 22 * * *", async () => {
+
+if(!sock){
+console.log("❌ WhatsApp not ready")
+return
+}
 
 console.log("⏰ Sending messages")
 
@@ -56,5 +62,7 @@ console.log("Message sent:", num)
 await new Promise(r => setTimeout(r,5000))
 
 }
+
+console.log("✅ Bulk sending finished")
 
 })
