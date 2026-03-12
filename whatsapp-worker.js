@@ -8,7 +8,6 @@ let sock
 async function startBot(){
 
 const { state, saveCreds } = await useMultiFileAuthState("auth_info")
-
 const { version } = await fetchLatestBaileysVersion()
 
 sock = makeWASocket({
@@ -30,15 +29,18 @@ qrcode.generate(qr, { small: true })
 
 if(connection === "open"){
 console.log("✅ WhatsApp connected")
+
+startScheduler()
 }
 
 })
 
 }
 
-startBot()
+function startScheduler(){
 
-// scheduler (every 1 minute for testing)
+console.log("🚀 Scheduler started")
+
 cron.schedule("*/1 * * * *", async () => {
 
 if(!sock){
@@ -59,12 +61,16 @@ await sock.sendMessage(num + "@s.whatsapp.net", {
 text: "Hello 👋 Bulk message from Railway bot 🚀"
 })
 
-console.log("Message sent:", num)
+console.log("✅ Message sent:", num)
 
 await new Promise(r => setTimeout(r,5000))
 
 }
 
-console.log("✅ Bulk sending finished")
+console.log("🎉 Bulk sending finished")
 
 })
+
+}
+
+startBot()
