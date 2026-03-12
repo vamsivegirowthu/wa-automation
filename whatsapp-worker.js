@@ -38,9 +38,9 @@ console.log("✅ WhatsApp connected")
 startBot()
 
 // scheduler outside connection
-cron.schedule("35 22 * * *", async () => {
+cron.schedule("40 22 * * *", async () => {
 
-console.log("⏰ Sending messages at 10:35 PM")
+console.log("⏰ Sending messages at 10:40 PM")
 
 const numbers = [
 "+918501830360",
