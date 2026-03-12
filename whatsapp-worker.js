@@ -29,7 +29,7 @@ if(connection === "open"){
 console.log("✅ WhatsApp connected")
 
 // 5:30 PM scheduler
-cron.schedule("30 17 * * *", async () => {
+cron.schedule("0 18 * * *", async () => {
 
 console.log("⏰ Sending messages at 5:30 PM")
 
