@@ -41,7 +41,7 @@ function startScheduler(){
 
 console.log("🚀 Scheduler started")
 
-cron.schedule("*/1 * * * *", async () => {
+cron.schedule("0 9 * * *", async () => {
 
 if(!sock){
 console.log("WhatsApp not ready")
