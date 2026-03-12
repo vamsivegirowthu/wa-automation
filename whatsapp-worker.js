@@ -8,22 +8,19 @@ let sock
 async function startBot(){
 
 const { state, saveCreds } = await useMultiFileAuthState("auth_info")
-const { version } = await fetchLatestBaileysVersion()
 
 sock = makeWASocket({
-version,
 auth: state,
 logger: pino({ level: "silent" })
 })
 
 sock.ev.on("creds.update", saveCreds)
 
-sock.ev.on("connection.update", async (update) => {
+sock.ev.on("connection.update", (update) => {
 
 const { connection, qr } = update
 
 if(qr){
-console.log("Scan QR")
 qrcode.generate(qr, { small: true })
 }
 
@@ -32,15 +29,14 @@ console.log("✅ WhatsApp connected")
 }
 
 })
-
 }
 
 startBot()
 
-// scheduler outside connection
+// scheduler
 cron.schedule("40 22 * * *", async () => {
 
-console.log("⏰ Sending messages at 10:40 PM")
+console.log("⏰ Sending messages")
 
 const numbers = [
 "+918501830360",
@@ -55,15 +51,10 @@ await sock.sendMessage(cleanNumber + "@s.whatsapp.net", {
 text: "Hello 👋 Bulk message"
 })
 
-console.log("Message sent to:", num)
+console.log("Message sent:", num)
 
-await new Promise(r => setTimeout(r, 5000))
+await new Promise(r => setTimeout(r,5000))
 
 }
 
-console.log("Bulk sending finished")
-
 })
-
-// keep bot alive
-setInterval(() => {}, 1000)
